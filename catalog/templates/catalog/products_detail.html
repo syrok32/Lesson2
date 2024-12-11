@@ -1,0 +1,25 @@
+{%  extends 'catalog/base.html' %}
+
+
+{% block content %}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    
+                    <h1 class="h3"> {{ product.name }}</h1>
+                </div>
+                <div class="card-body">
+                    <h5>Описание</h5>
+                    <p>{{ product.description }}</p>
+                    <p>{{ product.updated_at }}</p>
+                    <hr>
+                    <h2 class="h5 text-success">Цена: {{ product.price }} ₽</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
