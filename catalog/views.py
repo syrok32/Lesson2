@@ -1,38 +1,32 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.views.generic import TemplateView, ListView, DetailView
 
 from catalog.models import Product
 
+class HomeTemplateView(TemplateView):
 
-# Create your views here.
-def home_view(request):
-    latest_products = Product.objects.order_by('-created_at')[:5]
-
-    # Вывод последних продуктов в консоль
-    for product in latest_products:
-        print(f"Product ID: {product.id}, Name: {product.name}, Created At: {product.created_at}")
-
-    # Передача данных в шаблон
-    return render(request, 'catalog/home.html', {'latest_products': latest_products})
+    template_name = 'catalog/home.html'
 
 
-def product_list(request):
-    products = Product.objects.all()
-    contex = {'products': products}
-    return render(request, 'catalog/products.html', contex)
+
+class  ProductListView(ListView):
+    model =  Product
 
 
-def detail_products(request, product_id):
-    product = Product.objects.get(id=product_id)
-    contex = {'product': product}
-    return render(request, 'catalog/products_detail.html', contex)
+
+class ProductDetailView(DetailView):
+    model = Product
 
 
-def contacts_view(request):
-    if request.method == 'POST':
+class ContactsTemplateView(TemplateView):
+    template_name = 'catalog/contacts.html'
+
+    def post(self, request, *args, **kwargs):
         name = request.POST.get('name')
         phone = request.POST.get('phone')
         message = request.POST.get('message')
+
         return HttpResponse(f"Спасибо, {name}! Ваше сообщение получено.")
 
-    return render(request, 'catalog/contacts.html')
+

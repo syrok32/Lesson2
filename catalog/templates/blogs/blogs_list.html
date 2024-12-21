@@ -1,0 +1,42 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+    <div class="container">
+        <div class="text-center p-5">
+            <h1>Catalog</h1>
+            <h6>Блоги</h6>
+        </div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-10">
+                    <div class="col-10 mb-4">
+                        <div class="d-flex justify-content-center gap-2">
+                            <a class="btn btn-primary" href="{% url 'home_view' %}">Домой</a>
+                            <a class="btn btn-primary" href="{% url 'blogs:blog_create' %}">создать</a>
+                        </div>
+                    </div>
+                    <div class="row g-3">
+                        {% for blog in object_list %}
+                            <div class="col-md-8 d-flex justify-content-center">
+                                <div class="card" style="width: 50rem;">
+                                    <h5 class="card-header">{{ product.headline }}</h5>
+
+
+                                    <div class="card-body text-start">
+                                        <h5 class="card-title">{{ blog.contents }}</h5>
+                                        <p class="card-text">{{ blog.description |truncatechars:100 }}</p>
+                                        <a href="{% url 'blogs:blog_det' blog.id %}"
+                                           class="btn btn-primary">посмотреть</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    </div>
+    </div>
+{% endblock %}
