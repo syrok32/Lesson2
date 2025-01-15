@@ -1,13 +1,13 @@
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, ListView
-
+from .forms import AddPostForm
 from blogs.models import Blog
 
 
 # Create your views here.
 class BlogCreateView(CreateView):
     model = Blog
-    fields = ["headline", "contents", "image", "verified", "count"]
+    form_class = AddPostForm
     success_url = reverse_lazy('blogs:blog_list')
 
 
