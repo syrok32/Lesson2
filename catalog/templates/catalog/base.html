@@ -9,26 +9,40 @@
     <link rel="stylesheet" href="/static/css/bootstrap.min.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-  <div class="container-fluid">
-    <h5 class="my-0 mr-md-auto font-weight-normal">Skystore</h5>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Переключатель навигации">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="p-2 btn btn-outline-primary nav-link" href="/contacts/">Контакты</a>
-        </li>
-        <li class="nav-item">
-          <a class="p-2 btn btn-outline-primary nav-link" href="{%  url 'products' %}">Каталог</a>
-        </li>
-      </ul>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <h5 class="my-0 mr-md-auto font-weight-normal">Skystore</h5>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Переключатель навигации">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="p-2 btn btn-outline-primary nav-link" href="/contacts/">Контакты</a>
+                </li>
+                <li class="nav-item">
+                    <a class="p-2 btn btn-outline-primary nav-link" href="{% url 'products' %}">Каталог</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <form action="{% url 'user:logout' %}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success">выйти</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="p-2 btn btn-outline-primary nav-link" href="{% url 'user:login' %}">вход</a>
+                        <a class="p-2 btn btn-outline-primary nav-link" href="{% url 'user:register' %}">Регестрация</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
     </div>
-  </div>
 </nav>
-    <div class="container mt-5">
-        {% block content %}{% endblock %}
+<div class="container mt-5">
+    {% block content %}{% endblock %}
 </div>
 <!-- Подключение Bootstrap JS -->
 <script src="/static/js/bootstrap.bundle.min.js"></script>
