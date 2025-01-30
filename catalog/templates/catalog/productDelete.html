@@ -1,28 +1,31 @@
 {% extends 'catalog/base.html' %}
 
 {% block content %}
-    <div class='container'>
-        <div class="row">
-            <div class="col-10">
-                <form class="row" method="post" enctype="multipart/form-data">
-                    <div class="card">
-                        <p class="card-text">хотите удалить {{ object.name }}</p>
-                        <div class="card-body">
-                            {% csrf_token %}
-
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-danger text-white">
+                    <h2 class="h4 mb-0">Подтверждение удаления</h2>
+                </div>
+                <div class="card-body">
+                    <p class="lead text-center mb-4">
+                        Вы уверены, что хотите удалить товар <strong>"{{ object.name }}"</strong>?
+                    </p>
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-danger me-2">
+                                <i class="bi bi-trash me-2"></i>Удалить
+                            </button>
+                            <a href="{% url 'products' %}" class="btn btn-secondary">
+                                <i class="bi bi-x-circle me-2"></i>Отмена
+                            </a>
                         </div>
-
-                        <button type="submit" class="btn btn-primary">
-                            удалить
-                        </button>
-
-                            <a href="{% url 'products' %}" class="btn btn-primary">Вернуться к списку</a>
-                    </div>
-                </form>
-
+                    </form>
+                </div>
             </div>
-
-
         </div>
     </div>
+</div>
 {% endblock %}

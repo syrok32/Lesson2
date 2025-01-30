@@ -1,76 +1,78 @@
 {% extends 'catalog/base.html' %}
 
-
-
-
 {% block content %}
-
-    <div class="container">
-        <div class="row text-center">
-            <div class="col-3">
-                <div class="col-10 mb-4">
-                    <div class="d-flex justify-content-center gap-2">
-                        <a class="btn btn-primary" href="{% url 'blogs:blog_list' %}">Список</a>
-                    </div>
-                </div>
-                <div class="card mb-4 box-shadow">
-
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-normal">Удобный сервис рассылок</h4>
+<div class="container py-5">
+    <div class="row">
+        <!-- Sidebar -->
+        <div class="col-lg-3 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Навигация</h5>
+                    <div class="d-grid gap-2">
+                        <a class="btn btn-primary" href="{% url 'blogs:blog_list' %}">Список блогов</a>
                     </div>
                     <div class="card-body">
-                        <h1 class="card-title pricing-card-title">$ 140</h1>
-                        <ul class="list-unstyled mt-3 mb-4 text-start m-3">
-                            <li>- Неограниченная лицензия</li>
-                            <li>- Поддержка</li>
-                            <li>- Установка на сервер</li>
-                            <li>- Получение обновлений</li>
-                        </ul>
-                        <button type="button" class="btn btn-lg btn-block btn-outline-primary">Купить</button>
+                    <div class="d-grid gap-2">
+                        <a class="btn btn-primary" href="{% url 'products' %}">Список продуктов</a>
                     </div>
+                        </div>
                 </div>
-
             </div>
-
         </div>
 
-        <footer class="pt-4 my-md-5 pt-md-5 border-top">
-            <div class="row">
-                <div class="col-12 col-md">
-                    SkyStore
-                    <small class="d-block mb-3 text-muted">&copy; 2023</small>
+        <!-- Main Content -->
+        <div class="col-lg-9">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="my-0 font-weight-normal">Удобный сервис рассылок</h4>
                 </div>
-                <div class="col-6 col-md">
-                    <h5>Категории</h5>
-                    <ul class="list-unstyled text-small">
-                        <li><a class="text-muted" href="#">Рассылки</a></li>
-                        <li><a class="text-muted" href="#">Телеграм боты</a></li>
-                        <li><a class="text-muted" href="#">Полезные утилиты</a></li>
-                        <li><a class="text-muted" href="#">Веб-приложения</a></li>
-                        <li><a class="text-muted" href="#">Микросервисы</a></li>
+                <div class="card-body">
+                    <h2 class="card-title pricing-card-title mb-4">$140 <small class="text-muted">/ месяц</small></h2>
+                    <ul class="list-group list-group-flush mb-4">
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i>Неограниченная лицензия</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i>Поддержка</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i>Установка на сервер</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-success me-2"></i>Получение обновлений</li>
                     </ul>
-
+                    <div class="d-grid">
+                        <button type="button" class="btn btn-lg btn-primary">Купить сейчас</button>
+                    </div>
                 </div>
-                <div class="col-6 col-md">
-                    <h5>Дополнительно</h5>
-                    <ul class="list-unstyled text-small">
-                        <li><a class="text-muted" href="#">Мы пишем</a></li>
-                    </ul>
-                </div>
-                <div class="col-6 col-md">
-                    <h5>О нас</h5>
-                    <ul class="list-unstyled text-small">
-                        <li><a class="text-muted" href="/contacts/">Контакты</a></li>
-                    </ul>
-
-                </div>
-
             </div>
-        </footer>
-
-
+        </div>
     </div>
-    <!-- Подключите статичеcкие файлы со скриптами Bootstrap -->
+</div>
 
-
+<footer class="bg-light mt-5 py-5 border-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-3 mb-3">
+                <h5 class="text-primary">SkyStore</h5>
+                <small class="d-block mb-3 text-muted">&copy; 2023 Все права защищены</small>
+            </div>
+            <div class="col-6 col-md-3 mb-3">
+                <h5>Категории</h5>
+                <ul class="list-unstyled">
+                    <li><a class="text-muted" href="#">Рассылки</a></li>
+                    <li><a class="text-muted" href="#">Телеграм боты</a></li>
+                    <li><a class="text-muted" href="#">Полезные утилиты</a></li>
+                    <li><a class="text-muted" href="#">Веб-приложения</a></li>
+                    <li><a class="text-muted" href="#">Микросервисы</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md-3 mb-3">
+                <h5>Дополнительно</h5>
+                <ul class="list-unstyled">
+                    <li><a class="text-muted" href="#">Мы пишем</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-md-3 mb-3">
+                <h5>О нас</h5>
+                <ul class="list-unstyled">
+                    <li><a class="text-muted" href="/contacts/">Контакты</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
 {% endblock %}

@@ -1,24 +1,20 @@
 from django import forms
-from .models import  Product
-from  django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError
+
+from .models import Product
 
 Ban_words = [
     'казино', 'криптовалюта', 'крипта', 'биржа',
-    'дешево', 'бесплатно', 'обман', 'полиция', 'радар'
-]
+    'дешево', 'бесплатно', 'обман', 'полиция', 'радар']
+
+# Базовая форма с общей логикой
 
 
-class ProductForm(forms.ModelForm):
-
-    class Meta:
-        model = Product
-        fields = "__all__"
-
-
+class BaseProductForm(forms.ModelForm):
     def clean_price(self):
         price = self.cleaned_data.get('price')
         if int(price) < 0:
-            raise ValidationError('Ценна не может быть отрицательная')
+            raise ValidationError('Цена не может быть отрицательной')
         return price
 
     def clean_name(self):
@@ -36,26 +32,24 @@ class ProductForm(forms.ModelForm):
         return description
 
     def __init__(self, *args, **kwargs):
-        super(ProductForm, self).__init__(*args, **kwargs)
+        super(BaseProductForm, self).__init__(*args, **kwargs)
 
-        self.fields['name'].widget.attrs.update({
-            'class': 'form-control',  # Добавление CSS-класса для стилизации поля
-            'placeholder': 'Введите имя'  # Текст подсказки внутри поля
-        })
-        self.fields['description'].widget.attrs.update({
-            'class': 'form-control',  # Добавление CSS-класса для стилизации поля
-            'placeholder': 'Введите описание'  # Текст подсказки внутри поля
-        })
-        self.fields['image'].widget.attrs.update({
-            'class': 'form-control',  # Добавление CSS-класса для стилизации поля
-            'placeholder': 'выбирите картинку'  # Текст подсказки внутри поля
-        })
+        # Стилизация полей
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({
+                'class': 'form-control',  # CSS-класс
+                'placeholder': f'Введите {field.label.lower()}'  # Подсказка
+            })
 
-        self.fields['category'].widget.attrs.update({
-            'class': 'form-control',  # Добавление CSS-класса для стилизации поля
-            'placeholder': 'Выбирите категорию'  # Текст подсказки внутри поля
-        })
-        self.fields['price'].widget.attrs.update({
-            'class': 'form-control',  # Добавление CSS-класса для стилизации поля
-            'placeholder': 'Введите ценну '  # Текст подсказки внутри поля
-        })
+
+class ProductFormModerator(BaseProductForm):
+    class Meta:
+        model = Product
+        fields = "__all__"  # Использовать все поля
+
+
+
+class ProductForm(BaseProductForm):
+    class Meta:
+        model = Product
+        fields = ["name", "description", "price", "image", "category", ]  # Укажите нужные поля

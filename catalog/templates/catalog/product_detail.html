@@ -1,22 +1,50 @@
-{%  extends 'catalog/base.html' %}
-
+{% extends 'catalog/base.html' %}
 
 {% block content %}
-
-<div class="container mt-5">
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <div class="card">
-                <div class="card-header bg-primary text-white">
-                    
-                    <h1 class="h3"> {{ product.name }}</h1>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white py-3">
+                    <h1 class="h3 mb-0">{{ product.name }}</h1>
                 </div>
                 <div class="card-body">
-                    <h5>Описание</h5>
-                    <p>{{ product.description }}</p>
-                    <p>{{ product.updated_at }}</p>
+                    <div class="mb-4">
+                        <h5 class="text-muted mb-3">Описание</h5>
+                        <p class="lead">{{ product.description }}</p>
+                    </div>
+                    <div class="mb-4">
+                        <h5 class="text-muted mb-2">Последнее обновление</h5>
+                        <p><i class="bi bi-clock me-2"></i>{{ product.updated_at}}</p>
+                    </div>
                     <hr>
-                    <h2 class="h5 text-success">Цена: {{ product.price }} ₽</h2>
+                    <h2 class="h4 text-success mb-4">
+                        <i class="bi bi-tag-fill me-2"></i>Цена: {{ product.price }} ₽
+                    </h2>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{% url 'products' %}" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left me-2"></i>Назад к каталогу
+                        </a>
+                        <div>
+                            {% if perms.user.can_unpublish_product %}
+                            <form method="post" action="{% url 'unpublish_product' product.id %}" class="d-inline-block me-2">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-warning">
+                                    <i class="bi bi-eye-slash me-2"></i>Отменить публикацию
+                                </button>
+                            </form>
+                            {% endif %}
+                            {% if perms.user.delete_product %}
+                            <form method="post" action="{% url 'delete_product' product.id %}" class="d-inline-block">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">
+                                    <i class="bi bi-trash me-2"></i>Удалить
+                                </button>
+                            </form>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

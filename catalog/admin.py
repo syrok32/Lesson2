@@ -14,7 +14,8 @@ class StudentAdmin(admin.ModelAdmin):
     list_filter = ('category',)
     search_fields = ('name', 'description')
 
+class AuthorAdmin(admin.ModelAdmin):
+    pass
 
-from django.contrib import admin
 
 # Register your models here.

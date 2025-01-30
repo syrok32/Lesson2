@@ -15,9 +15,9 @@
                             <a href="{% url 'blogs:blog_update' object.id %}" class="btn btn-secondary">Редактировать</a>
                             <a href="{% url 'blogs:blog_del' object.id %}" class="btn btn-danger">Удалить</a>
                             <a href="{% url 'blogs:blog_list' %}" class="btn btn-primary">Вернуться к списку</a>
-                            
+
                             {% csrf_token %}
-                        
+
                         </div>
                     </div>
                 </form>
