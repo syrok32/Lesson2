@@ -1,8 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, ListView
-from .forms import AddPostForm
+
 from blogs.models import Blog
+from .forms import AddPostForm
 
 
 # Create your views here.
@@ -44,5 +45,4 @@ class BloglListView(ListView):
     template_name = 'blogs/blogs_list.html'
 
     def get_queryset(self):
-        # Возвращаем только статьи с положительным признаком публикации
         return Blog.objects.filter(verified=True)

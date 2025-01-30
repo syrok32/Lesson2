@@ -1,42 +1,77 @@
 {% extends 'catalog/base.html' %}
+
 {% block content %}
-    <div class="container">
-        <div class="text-center p-5">
-            <h1>Catalog</h1>
-            <h6>Блоги</h6>
+<div class="container py-5">
+    <header class="text-center mb-5">
+        <h1 class="display-4 mb-3">Каталог блогов</h1>
+        <p class="lead text-muted">Ознакомьтесь с нашими последними публикациями</p>
+    </header>
+
+    <div class="row justify-content-center mb-4">
+        <div class="col-md-8 d-flex justify-content-center gap-2">
+            <a class="btn btn-outline-primary" href="{% url 'home_view' %}">
+                <i class="bi bi-house-door me-2"></i>Домой
+            </a>
+            <a class="btn btn-primary" href="{% url 'blogs:blog_create' %}">
+                <i class="bi bi-plus-circle me-2"></i>Создать новый блог
+            </a>
         </div>
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-10">
-                    <div class="col-10 mb-4">
-                        <div class="d-flex justify-content-center gap-2">
-                            <a class="btn btn-primary" href="{% url 'home_view' %}">Домой</a>
-                            <a class="btn btn-primary" href="{% url 'blogs:blog_create' %}">создать</a>
-                        </div>
-                    </div>
-                    <div class="row g-3">
-                        {% for blog in object_list %}
-                            <div class="col-md-8 d-flex justify-content-center">
-                                <div class="card" style="width: 50rem;">
-                                    <h5 class="card-header">{{ product.headline }}</h5>
+    </div>
 
-
-                                    <div class="card-body text-start">
-                                        <h5 class="card-title">{{ blog.contents }}</h5>
-                                        <p class="card-text">{{ blog.description |truncatechars:100 }}</p>
-                                        <a href="{% url 'blogs:blog_det' blog.id %}"
-                                           class="btn btn-primary">посмотреть</a>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
+    <div class="row justify-content-center">
+        {% for blog in object_list %}
+        <div class="col-md-8 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="card-title mb-0">{{ blog.headline }}</h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">{{ blog.contents }}</h6>
+                    <p class="card-text">{{ blog.description|truncatechars:100 }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <a href="{% url 'blogs:blog_det' blog.id %}" class="btn btn-primary">
+                            <i class="bi bi-eye me-2"></i>Посмотреть
+                        </a>
+                        <small class="text-muted">
+                            <i class="bi bi-calendar3 me-2"></i>{{ blog.created_at|date:"d.m.Y" }}
+                        </small>
                     </div>
                 </div>
             </div>
         </div>
+        {% empty %}
+        <div class="col-md-8 text-center">
+            <p class="lead text-muted">Пока нет опубликованных блогов.</p>
+        </div>
+        {% endfor %}
     </div>
 
+    {% if is_paginated %}
+    <nav aria-label="Page navigation" class="mt-4">
+        <ul class="pagination justify-content-center">
+            {% if page_obj.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+            {% endif %}
 
-    </div>
-    </div>
+            {% for num in page_obj.paginator.page_range %}
+            <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+            </li>
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    {% endif %}
+</div>
 {% endblock %}
