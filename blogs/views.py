@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, UpdateView, DetailView, DeleteView, ListView
 from .forms import AddPostForm
@@ -5,13 +6,13 @@ from blogs.models import Blog
 
 
 # Create your views here.
-class BlogCreateView(CreateView):
+class BlogCreateView(LoginRequiredMixin, CreateView):
     model = Blog
     form_class = AddPostForm
     success_url = reverse_lazy('blogs:blog_list')
 
 
-class BlogUpdateView(UpdateView):
+class BlogUpdateView(LoginRequiredMixin, UpdateView):
     model = Blog
     fields = ["headline", "contents", "image", "verified", "count"]
     success_url = reverse_lazy('blogs:blog_list')
@@ -20,13 +21,13 @@ class BlogUpdateView(UpdateView):
         return reverse('blogs:blog_det', args=[self.object.pk])
 
 
-class BlogDeletelView(DeleteView):
+class BlogDeletelView(LoginRequiredMixin, DeleteView):
     model = Blog
     template_name = 'blogs/blogs_confirm_delete.html'
     success_url = reverse_lazy('blogs:blog_list')
 
 
-class BloglDetailView(DetailView):
+class BloglDetailView(LoginRequiredMixin, DetailView):
     model = Blog
     template_name = 'blogs/blogs_detail.html'
     context_object_name = '/home/'
