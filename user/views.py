@@ -2,7 +2,6 @@ from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView
 
 from user.forms import UserRegisterForm
-from  user.models import CustomUser
 
 
 class RegisterView(CreateView):
@@ -21,5 +20,4 @@ class RegisterView(CreateView):
         from_email = 'stepstepan2@gmail.com'
         recipient_list = [user_email]
         from django.core.mail import send_mail
-        send_mail(subject, message, from_email, recipient_list )
-
+        send_mail(subject, message, from_email, recipient_list)
