@@ -30,11 +30,10 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - ./.env
-    environment:
-      POSTGRES_PASSWORD: 202054
 
   redis:
     image: redis:7
+    command: redis-server --save 60 1 --loglevel warning
     volumes:
       - redis_data:/data
     env_file:
