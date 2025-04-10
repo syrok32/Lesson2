@@ -21,3 +21,4 @@ class RegisterView(CreateView):
         recipient_list = [user_email]
         from django.core.mail import send_mail
         send_mail(subject, message, from_email, recipient_list)
+

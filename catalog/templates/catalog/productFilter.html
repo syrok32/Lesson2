@@ -1,0 +1,76 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h1 class="display-4 mb-3">Каталог товаров</h1>
+            <p class="lead text-muted mb-4">Добро пожаловать на сайт, предназначенный для продажи товаров</p>
+            <a href="{% url 'products_create' %}" class="btn btn-primary btn-lg">
+                <i class="bi bi-plus-circle me-2"></i>Создать новый товар
+            </a>
+        </div>
+
+        <!-- Форма для фильтрации по категории -->
+        <div class="mb-5">
+            <form method="get" action="{% url 'product_filter' %}" class="row g-3">
+                <div class="col-md-6">
+                    <label for="category_id" class="form-label">Категория:</label>
+                    <select name="category_id" id="category_id" class="form-select">
+                        <option value="">Все категории</option>
+                        {% for category in categories %}
+                            <option value="{{ category.id }}" {% if category.id|stringformat:"s" == request.GET.category_id %}selected{% endif %}>
+                                {{ category.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-6 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-filter me-2"></i>Фильтровать
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Список товаров -->
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for product in object_list %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="card-title mb-0">{{ product.name }}</h5>
+                        </div>
+                        <div class="card-body d-flex flex-column">
+                            <h2 class="text-center text-primary mb-3">{{ product.price }}$</h2>
+                            <p class="card-text flex-grow-1">{{ product.description|truncatechars:100 }}</p>
+                            <div class="d-grid gap-2">
+                                {% if user == product.owner %}
+                                    <a href="{% url 'products_details' product.id %}" class="btn btn-outline-primary">
+                                        <i class="bi bi-info-circle me-2"></i>Детали
+                                    </a>
+                                    <div class="btn-group" role="group">
+                                        <a href="{% url 'products_update' product.id %}"
+                                           class="btn btn-outline-secondary">
+                                            <i class="bi bi-pencil me-2"></i>Обновить
+                                        </a>
+                                        <form method="post" action="{% url 'delete_product' product.id %}"
+                                              class="d-block">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-outline-warning">
+                                                <i class="bi bi-trash me-2"></i>Удалить
+                                            </button>
+                                        </form>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12 text-center">
+                    <p class="lead text-muted">В каталоге пока нет товаров.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

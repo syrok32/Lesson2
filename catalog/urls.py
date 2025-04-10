@@ -1,12 +1,13 @@
 from django.urls import path
 
 from . import views
-from .views import UnpublishProductView, DeleteProductView
+from .views import UnpublishProductView, DeleteProductView, ProductFilter
 
 urlpatterns = [
     path('', views.HomeTemplateView.as_view(), name='home_view'),
     path('contacts/', views.ContactsTemplateView.as_view(), name='contacts_view'),
     path('products', views.ProductListView.as_view(), name='products'),
+    path('products/filter/', ProductFilter.as_view(), name='product_filter'),
     path('products_details/<int:pk>', views.ProductDetailView.as_view(), name='products_details'),
     path('products_create', views.ProductCreateView.as_view(), name='products_create'),
     path('products_update/<int:pk>', views.ProductUpdateView.as_view(), name='products_update'),
